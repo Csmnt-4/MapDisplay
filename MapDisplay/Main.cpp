@@ -32,6 +32,8 @@ int main()
 				done = true; //Game over
 				break;
 			}
+			update = false;
+			fight = false;
 		}
 
 		if (update)
@@ -71,7 +73,7 @@ int main()
 						update = true;
 						theMap.currentFloorNumber--;
 					}
-					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] == 8)
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y - 1] == 8)
 					{
 						thePlayer.y -= 1;
 						update = true;
@@ -131,7 +133,7 @@ int main()
 						update = true;
 						theMap.currentFloorNumber--;
 					}
-					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] == 8)
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x - 1][thePlayer.y] == 8)
 					{
 						thePlayer.x -= 1;
 						update = true;
@@ -161,7 +163,7 @@ int main()
 						update = true;
 						theMap.currentFloorNumber--;
 					}
-					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] == 8)
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x + 1][thePlayer.y] == 8)
 					{
 						thePlayer.x += 1;
 						update = true;
