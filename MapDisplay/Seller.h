@@ -19,7 +19,7 @@ public:
 
 	Seller();
 
-	int BuyPoition(int poition, Seller& seller);
-	void Talk(Seller& seller);
+	int BuyPoition(int poition);
+	void Talk();
 };
 

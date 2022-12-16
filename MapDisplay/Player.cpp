@@ -27,7 +27,10 @@ Player::Player()
 
 	x = 1;
 	y = 1;
+
 	sprite = '&';
+	
+	kills = 0;
 
 	coins = 10;
 }

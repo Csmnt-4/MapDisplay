@@ -62,7 +62,7 @@ bool Fight::AutomatedFight(Monster& monster) {
 					<< thePlayer.name << " for " << monsterAttackDamage << " damage!" << std::endl;
 				if (monsterAttackDamage > 20)
 					std::cout << "Critical hit!" << std::endl;
-				playerHealth -= monsterAttackDamage;
+				playerHealth -= monsterAttackDamage - thePlayer.def;
 				std::cout << "  HP left: " << playerHealth << std::endl;
 			}
 			else {
@@ -98,8 +98,9 @@ bool Fight::FightLoop()
 
 	if (AutomatedFight(creature)) {
 		DiceRoller dice;
-		int coins = 5 * dice.Roll1DN(creature.vtl * 2);
+		int coins = 5 * dice.Roll1DN(creature.vtl);
 		thePlayer.coins += coins;
+		thePlayer.kills++;
 
 		system("cls");
 		theMap.Draw();
@@ -117,12 +118,12 @@ bool Fight::FightLoop()
 		return true;
 	}
 	else {
+		thePlayer.sprite = 't';
 		system("cls");
 		theMap.Draw();
 		std::cout << "\n\t" << ModToString(creature.mod) << " "
 			<< RaceToString(creature.race) << " wins." << std::endl;
 		std::this_thread::sleep_for(500ms);
-
 		std::cout << "  They have slain " << thePlayer.name << "." << std::endl;
 		std::cout << "  The monster had " << creature.vtl * 10 << " HP." << std::endl;
 		std::this_thread::sleep_for(1s);

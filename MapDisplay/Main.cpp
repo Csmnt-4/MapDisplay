@@ -1,14 +1,17 @@
-#pragma once
 #include <iostream>
 #include <conio.h> //for kbhit
+#include <chrono>
+#include <thread>
 
 #include "Globals.h"
 #include "Player.h"
+#include "Seller.h"
 
-#pragma once
+using namespace std::literals::chrono_literals;
 
 int main()
 {
+	Seller seller;
 	bool done = false;
 	bool update = true;
 
@@ -32,8 +35,16 @@ int main()
 				done = true; //Game over
 				break;
 			}
-			update = false;
 			fight = false;
+		}
+
+		if (shop)
+		{
+			seller.Talk();
+
+			std::this_thread::sleep_for(1s);
+			shop = false;
+			update = true;
 		}
 
 		if (update)
@@ -76,8 +87,26 @@ int main()
 					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y - 1] == 8)
 					{
 						thePlayer.y -= 1;
-						update = true;
 						fight = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y - 1] == 6)
+					{
+						shop = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y - 1] == 7)
+					{
+						if (thePlayer.kills >= 5)
+						{
+							thePlayer.y -= 1;
+							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
+							theMap = aMap;
+							theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y - 1] = 0;
+							std::this_thread::sleep_for(4s);
+							update = true;
+						}
+						else {
+							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+						}
 					}
 				}
 				break;
@@ -106,8 +135,26 @@ int main()
 					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] == 8)
 					{
 						thePlayer.y += 1;
-						update = true;
 						fight = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] == 6)
+					{
+						shop = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] == 7)
+					{
+						if (thePlayer.kills >= 5)
+						{
+							thePlayer.y += 1;
+							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
+							theMap = aMap;
+							theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] = 0;
+							std::this_thread::sleep_for(4s);
+							update = true;
+						}
+						else {
+							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+						}
 					}
 				}
 				break;
@@ -136,8 +183,26 @@ int main()
 					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x - 1][thePlayer.y] == 8)
 					{
 						thePlayer.x -= 1;
-						update = true;
 						fight = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x - 1][thePlayer.y] == 6)
+					{
+						shop = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x - 1][thePlayer.y] == 7)
+					{
+						if (thePlayer.kills >= 5)
+						{
+							thePlayer.x -= 1;
+							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
+							theMap = aMap;
+							theMap.map[theMap.currentFloorNumber][thePlayer.x - 1][thePlayer.y] = 0;
+							std::this_thread::sleep_for(4s);
+							update = true;
+						}
+						else {
+							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+						}
 					}
 				}
 				break;
@@ -166,8 +231,26 @@ int main()
 					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x + 1][thePlayer.y] == 8)
 					{
 						thePlayer.x += 1;
-						update = true;
 						fight = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x + 1][thePlayer.y] == 6)
+					{
+						shop = true;
+					}
+					else if (theMap.map[theMap.currentFloorNumber][thePlayer.x + 1][thePlayer.y] == 7)
+					{
+						if (thePlayer.kills >= 5)
+						{
+							thePlayer.x += 1;
+							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
+							theMap = aMap;
+							theMap.map[theMap.currentFloorNumber][thePlayer.x + 1][thePlayer.y] = 0;
+							std::this_thread::sleep_for(4s);
+							update = true;
+						}
+						else {
+							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+						}
 					}
 				}
 				break;

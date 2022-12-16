@@ -21,7 +21,7 @@ public:
 	char sprite;
 
 	int coins;
-	int monsterHead;
+	int kills;
 
 	Player();
 	void Draw();
