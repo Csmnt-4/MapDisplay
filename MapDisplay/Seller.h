@@ -19,7 +19,10 @@ public:
 
 	Seller();
 
+	std::string greeting;
+
 	int BuyPoition(int poition);
 	void Talk();
+	void Refill();
 };
 

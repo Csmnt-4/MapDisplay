@@ -6,4 +6,3 @@
 Fight fightObj;
 Player thePlayer;
 Map theMap("map1.txt");
-Map aMap("map2.txt");

@@ -19,6 +19,7 @@ int main()
 	bool fight = false;
 	bool shop = false;
 	bool quest = false;
+	bool stats = false;
 
 	while (!done)
 	{
@@ -52,6 +53,12 @@ int main()
 			system("cls");
 			theMap.Draw();
 			update = false;
+		}
+
+		if (stats)
+		{
+			thePlayer.Print();
+			stats = false;
 		}
 
 		if (_kbhit())
@@ -99,8 +106,8 @@ int main()
 						{
 							thePlayer.y -= 1;
 							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
-							theMap = aMap;
-							theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y - 1] = 0;
+							theMap.NextMap();
+							seller.Refill();
 							std::this_thread::sleep_for(4s);
 							update = true;
 						}
@@ -147,13 +154,13 @@ int main()
 						{
 							thePlayer.y += 1;
 							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
-							theMap = aMap;
-							theMap.map[theMap.currentFloorNumber][thePlayer.x][thePlayer.y + 1] = 0;
+							theMap.NextMap();
+							seller.Refill();
 							std::this_thread::sleep_for(4s);
 							update = true;
 						}
 						else {
-							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+							std::cout << "\t\nThe monsters on the other levels are screaming too loud for anything to happen";
 						}
 					}
 				}
@@ -195,13 +202,13 @@ int main()
 						{
 							thePlayer.x -= 1;
 							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
-							theMap = aMap;
-							theMap.map[theMap.currentFloorNumber][thePlayer.x - 1][thePlayer.y] = 0;
+							theMap.NextMap();
+							seller.Refill();
 							std::this_thread::sleep_for(4s);
 							update = true;
 						}
 						else {
-							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+							std::cout << "\t\nThe monsters on the other levels are screaming too loud for anything to happen";
 						}
 					}
 				}
@@ -243,17 +250,22 @@ int main()
 						{
 							thePlayer.x += 1;
 							std::cout << "\n\tYou notice that something.... happened.\n\t" << thePlayer.name << " stops and listens to the suuroundings..";
-							theMap = aMap;
-							theMap.map[theMap.currentFloorNumber][thePlayer.x + 1][thePlayer.y] = 0;
+							theMap.NextMap();
+							seller.Refill();
 							std::this_thread::sleep_for(4s);
 							update = true;
 						}
 						else {
-							std::cout << "\t\nThe monster on the other levels are screaming too loud for anything to happen";
+							std::cout << "\t\nThe monsters on the other levels are screaming too loud for anything to happen";
 						}
 					}
 				}
 				break;
+			case 'i':
+			{
+				update = true;
+				stats = true;
+			}
 			}
 		}
 	}

@@ -45,7 +45,7 @@ bool Fight::AutomatedFight(Monster& monster) {
 		if (dice.Roll1DN(100) <= playerChances) {
 			std::cout << thePlayer.name << " hits " << ModToString(monster.mod) << " "
 				<< RaceToString(monster.race) << " for " << playerAttackDamage << " damage!" << std::endl;
-			if (playerAttackDamage > 20)
+			if (playerAttackDamage > 2 * thePlayer.str + thePlayer.modStr)
 				std::cout << "Critical hit!" << std::endl;
 			monsterHealth -= playerAttackDamage;
 		}
@@ -58,11 +58,12 @@ bool Fight::AutomatedFight(Monster& monster) {
 
 		if (monsterHealth > 0) {
 			if (dice.Roll1DN(100) <= monsterChances) {
-				std::cout << ModToString(monster.mod) << " " << RaceToString(monster.race) << " hits " << "Player "
+				std::cout << ModToString(monster.mod) << " " << RaceToString(monster.race) << " hits Player "
 					<< thePlayer.name << " for " << monsterAttackDamage << " damage!" << std::endl;
-				if (monsterAttackDamage > 20)
+				if (monsterAttackDamage > 2 * monster.str + monster.modStr)
 					std::cout << "Critical hit!" << std::endl;
-				playerHealth -= monsterAttackDamage - thePlayer.def;
+				if (monsterAttackDamage - thePlayer.def - thePlayer.modDef > 0)
+					playerHealth -= monsterAttackDamage - thePlayer.def - dice.Roll1DN(thePlayer.modDef);
 				std::cout << "  HP left: " << playerHealth << std::endl;
 			}
 			else {
@@ -72,6 +73,16 @@ bool Fight::AutomatedFight(Monster& monster) {
 					std::cout << "  Their chance to hit was " << monsterChances << "%" << std::endl;
 			}
 		}
+		else if (dice.Roll1DN(thePlayer.luk) + dice.Roll1DN(thePlayer.modLuk) < dice.Roll1DN(monster.luk) + dice.Roll1DN(monster.modLuk)) 
+			if (dice.Roll1DN(100) <= monsterChances) {
+				std::cout << "Dying " << ModToString(monster.mod) << " " << RaceToString(monster.race) << " manages to deal a death blow to"
+					<< thePlayer.name << " for " << monsterAttackDamage << " damage!" << std::endl;
+				if (monsterAttackDamage > 2 * monster.str + monster.modStr)
+					std::cout << "Critical hit!" << std::endl;				
+				if (monsterAttackDamage - thePlayer.def - thePlayer.modDef > 0)
+					playerHealth -= monsterAttackDamage - thePlayer.def - dice.Roll1DN(thePlayer.modDef);
+				std::cout << "  HP left: " << playerHealth << std::endl;
+			}
 
 		std::this_thread::sleep_for(1s);
 	}
@@ -84,7 +95,7 @@ bool Fight::AutomatedFight(Monster& monster) {
 	else {
 		if (monsterHealth == monster.vtl * 10)
 			std::cout
-			<< "That was a very unlucky fight. Come have another later, when you have more agility! Or luck..."
+			<< "\n\tThat was a very unlucky fight. Come have another later, when you have more agility! Or luck..."
 			<< std::endl;
 
 		return false;
@@ -98,7 +109,7 @@ bool Fight::FightLoop()
 
 	if (AutomatedFight(creature)) {
 		DiceRoller dice;
-		int coins = 5 * dice.Roll1DN(creature.vtl);
+		int coins = 3 * dice.Roll1DN(creature.vtl) + 2 * dice.Roll1DN(creature.vtl);
 		thePlayer.coins += coins;
 		thePlayer.kills++;
 

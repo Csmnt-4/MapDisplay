@@ -22,6 +22,8 @@ Seller::Seller()
 	lukPoitionPrice = 10 * dice.Roll1DN(5);
 
 	coins = 0;
+
+	greeting = "\n\tHello, " + thePlayer.name + ". Welcome to my humble poitions shop!\n\tIn short, I've got all your skills and health needs covered!\n";
 }
 
 int Seller::BuyPoition(int poition)
@@ -143,16 +145,21 @@ void Seller::Talk() {
 	int choice = -1;
 	int result = -1;
 
-	std::cout << "\n\tBlahblahblah\n";
-	std::cout << "\n\tStr = 1, price is " << strPoitionPrice << "c and I have " << strPoitionQuantity << " of them.";
-	std::cout << "\n\tDef = 2, price is " << defPoitionPrice << "c and I have " << defPoitionQuantity << " of them.";
-	std::cout << "\n\tAgl = 3, price is " << aglPoitionPrice << "c and I have " << aglPoitionQuantity << " of them.";
-	std::cout << "\n\tVit = 4, price is " << vtlPoitionPrice << "c and I have " << vtlPoitionQuantity << " of them.";
-	std::cout << "\n\tLuk = 5, price is " << lukPoitionPrice << "c and I have " << lukPoitionQuantity << " of them.";
-	std::cout << "\n\n\tWhat do you want? If you want none (0), feel free to come back any time you want";
+	std::cout << greeting;
+	greeting = "\n\tBlahblahblah\n";
 
-	while (choice != 0) {
+	std::cout << "\n\tStr ( 1 ), price is " << strPoitionPrice << "c and I have " << strPoitionQuantity << " of them.";
+	std::cout << "\n\tDef ( 2 ), price is " << defPoitionPrice << "c and I have " << defPoitionQuantity << " of them.";
+	std::cout << "\n\tAgl ( 3 ), price is " << aglPoitionPrice << "c and I have " << aglPoitionQuantity << " of them.";
+	std::cout << "\n\tVit ( 4 ), price is " << vtlPoitionPrice << "c and I have " << vtlPoitionQuantity << " of them.";
+	std::cout << "\n\tLuk ( 5 ), price is " << lukPoitionPrice << "c and I have " << lukPoitionQuantity << " of them.";
+	std::cout << "\n\n\tWhat do you want? If you want none ( 6 ), feel free to come back any time you want\n\n\t";
+	while (result == -1) {
 		std::cin >> choice;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		switch (choice) {
 		case 1:
 		{
@@ -179,15 +186,19 @@ void Seller::Talk() {
 			result = BuyPoition(choice);
 			break;
 		}
+		case 6:
+		{
+			std::cout << "\n\tWell, I hope to see you later!";
+			result = 3;
+			break;
+		}
 		default:
-			std::cin.clear();
 			break;
 		}
 
 		switch (result)
 		{
 		case 0:
-			choice = 0;
 			std::cout << "\n\tThanks, bye!";
 			break;
 		case 1:
@@ -196,9 +207,30 @@ void Seller::Talk() {
 		case 2:
 			std::cout << "\n\tSorry, " << thePlayer.name << ", I don't have any of these.\n\tCome back later, maybe I'll get some!";
 			break;
+		case 3:
+			break;
 		default:
 			std::cout << "\n\tSorry, what was that? Could you repeat, please?";
 			break;
 		}
 	}
+}
+
+void Seller::Refill() {
+	greeting = "\n\tHey, " + thePlayer.name + "!\n\tGuess what - I have more poitions for you!\n\tThe prices have increased a little, thought...";
+
+	DiceRoller dice;
+
+	strPoitionQuantity += dice.Roll1DN(5);
+	defPoitionQuantity += dice.Roll1DN(5);
+	aglPoitionQuantity += dice.Roll1DN(5);
+	vtlPoitionQuantity += dice.Roll1DN(5);
+	lukPoitionQuantity += dice.Roll1DN(5);
+
+	strPoitionPrice += 5 * dice.Roll1DN(5);
+	defPoitionPrice += 5 * dice.Roll1DN(5);
+	aglPoitionPrice += 5 * dice.Roll1DN(5);
+	vtlPoitionPrice += 5 * dice.Roll1DN(5);
+	lukPoitionPrice += 5 * dice.Roll1DN(5);
+
 }

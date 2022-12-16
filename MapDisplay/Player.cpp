@@ -56,13 +56,17 @@ void Player::Print()
 	if (modAgl > 0) std::cout << "+" << modAgl << ")" << std::endl;
 	else std::cout << modAgl << ")" << std::endl;
 
-	std::cout << "\tVIT: " << vtl << " (";
+	/*std::cout << "\tVIT: " << vtl << " (";
 	if (modVtl > 0) std::cout << "+" << modVtl << ")" << std::endl;
-	else std::cout << modVtl << ")" << std::endl;
+	else std::cout << modVtl << ")" << std::endl;*/
+
+	std::cout << "\tVIT: " << vtl << std::endl;
 
 	std::cout << "\tLUK: " << luk << " (";
 	if (modLuk > 0) std::cout << "+" << modLuk << ")" << std::endl;
 	else std::cout << modLuk << ")\n" << std::endl;
+
+	std::cout << "\tCoins: " << coins << std::endl;
 }
 
 void Player::CreateCharacter()
@@ -87,6 +91,10 @@ void Player::CreateCharacter()
 	std::cout << "\t\t4) Roll 1D18\n\t";
 	do {
 		std::cin >> choice;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		switch (choice) {
 		case 1: {
 			//            TODO: Consider moving assigning values to function
@@ -122,7 +130,7 @@ void Player::CreateCharacter()
 		}
 			  break;
 		default: {
-			std::cout << "That was an invalid choice! Please choose again\n\t";
+			std::cout << "\tThat was an invalid choice! Please choose again\n\t";
 		}
 		}
 	} while ((choice < 1) || (choice > 6));

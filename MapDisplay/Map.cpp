@@ -113,3 +113,9 @@ void Map::Draw()
 		std::cout << std::endl;
 	}
 }
+
+void Map::NextMap() {
+	currentMapNumber++;
+	Map map("map" + std::to_string(currentMapNumber) + ".txt");
+	theMap = map;
+}

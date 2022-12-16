@@ -6,4 +6,3 @@
 extern Fight fightObj;
 extern Player thePlayer;
 extern Map theMap;
-extern Map aMap;
